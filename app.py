@@ -13,8 +13,16 @@ st.title("💼 SmartAta: Governança PMO Sênior")
 # Dica: No Streamlit Cloud, você pode esconder isso nos 'Secrets'
 with st.sidebar:
     st.header("Configurações de Acesso")
-    oa_key = st.text_input("OpenAI API Key", type="password")
-    gem_key = st.text_input("Gemini API Key", type="password")
+    # --- oa_key = st.text_input("OpenAI API Key", type="password")
+    # --- gem_key = st.text_input("Gemini API Key", type="password")
+
+# --- Configuração de Chaves via Secrets (Substitua a barra lateral antiga por isso) ---
+try:
+    oa_key = st.secrets["OPENAI_API_KEY"]
+    gem_key = st.secrets["GEMINI_API_KEY"]
+except KeyError:
+    st.error("Erro: As chaves de API não foram configuradas nos Secrets do Streamlit.")
+    st.stop() # Interrompe a execução se não encontrar as chaves
 
 # 2. Função para criar o documento Word
 def criar_docx(texto):
